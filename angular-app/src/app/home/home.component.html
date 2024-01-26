@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="grid-layout">
+    <div *ngFor="let home of homes">
+      <div class="card">
+        <div class="card-header">
+          <img [src]="home.imageUrl" alt="{{ home.title }}" />
+        </div>
+        <div class="card-body">
+          <h3>{{ home.title }}</h3>
+          <p>{{ home.description }}</p>
+          <p>Price: ${{ home.price | number }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
