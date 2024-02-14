@@ -10,8 +10,11 @@ router.post("/login", function (req: any, res: any, next: any) {
 });
 
 router.get("/status", function (req: any, res: any, next: any) {
-  console.log(req?.session);
+  res.status(200).json({ name: "akhil" });
+});
 
+router.get("/logout", function (req: any, res: any, next: any) {
+  req.session.destroy();
   res.status(200).json({ name: "akhil" });
 });
 
