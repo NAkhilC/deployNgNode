@@ -8,13 +8,23 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Store, StoreModule } from '@ngrx/store';
+import { selectAppState } from '../store/appUser.selector';
+import { UpdateAppUser } from '../store/appUser.actions';
+import { UserServiceService } from '../services/userService/user.service.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, HttpClientModule],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    HttpClientModule,
+    StoreModule,
+  ],
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -22,11 +32,21 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private store: Store,
+    private http: HttpClient,
+    private userService: UserServiceService
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
+    });
+  }
+
+  ngOnInit() {
+    this.userService.appUser$.subscribe((val) => {
+      if (val) {
+        this.router.navigate(['home']);
+      }
     });
   }
 
@@ -43,7 +63,11 @@ export class LoginComponent {
         }
       )
       .subscribe((val) => {
-        console.log(val);
+        this.store.dispatch(
+          UpdateAppUser({
+            appUser: { userName: val.name, status: val.name ? true : false },
+          })
+        );
         this.router.navigate(['home']);
       });
   }
