@@ -27,7 +27,7 @@ RUN npm i
 
 #docker image
 
-FROM alpine
+FROM node:18-alpine
 WORKDIR /app
 RUN apk add --no-cache nodejs
 COPY --from=server_build /app ./
