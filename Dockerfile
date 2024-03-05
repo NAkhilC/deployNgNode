@@ -1,35 +1,24 @@
-
-# Define node version
-FROM node:18-alpine AS client_build
-# Define container directory
-WORKDIR /app
-# Copy package*.json for npm install
-COPY ./angular-app /app/
-# Run npm clean install, including dev dependencies for @angular-devkit
+# Stage 1: Build Angular app
+FROM node:18-alpine AS angular-build
+WORKDIR /app/angular-app
+COPY angular-app/package.json angular-app/package-lock.json ./
 RUN npm install
-# Run npm install @angular/cli
+COPY angular-app ./
 RUN npm install -g @angular/cli
+RUN ng build --configuration production
 
-# Run ng build through npm to create dist folder
-RUN node_modules/.bin/ng build --configuration production
+# Stage 2: Build Node.js app
+FROM node:18-alpine AS node-build
+WORKDIR /app/node-server
+COPY node-server/package.json node-server/package-lock.json ./
+RUN npm install
+COPY node-server ./
+RUN npm run build
 
-
-# Define node version
-FROM node:18-alpine AS server_build
-# Define container directory
-WORKDIR /app
-# Copy package*.json for npm install
-COPY ./node-server /app/
-COPY --from=client_build /app/dist/angular-app /app/ang-app
-# Run npm clean install, prod dependencies only
-RUN npm i
-
-
-#docker image
-
+# Stage 3: Final image
 FROM node:18-alpine
 WORKDIR /app
-RUN apk add --no-cache nodejs
-COPY --from=server_build /app ./
+COPY --from=angular-build /app/angular-app/dist ./angular-app
+COPY --from=node-build /app/node-server ./
 EXPOSE 3000
-CMD ["node", "app.ts"]
+CMD ["npm", "start"]

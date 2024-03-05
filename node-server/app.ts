@@ -1,17 +1,16 @@
-import express from "express";
-import { Application } from "express";
-import dotenv from "dotenv";
-import cors from "cors";
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-import bodyParser from "body-parser";
+const bodyParser = require("body-parser");
 const redis = require("redis");
 const RedisStore = require("connect-redis").default;
 
 //For env File
 dotenv.config();
 
-const app: Application = express();
+const app = express();
 app.use(express.json());
 
 app.use(bodyParser.json());

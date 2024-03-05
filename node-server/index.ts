@@ -4,7 +4,7 @@ const listing = require("./routes/listing");
 const home = require("./routes/home");
 const register = require("./routes/register");
 
-router.get("/", function (req: any, res: any, next: any) {
+router.get("/", (req: any, res: any, next: any) => {
   res.status(200).json({ name: "akhil" });
 });
 
