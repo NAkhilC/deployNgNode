@@ -1,4 +1,5 @@
-import express, { Express, Request, Response, Application } from "express";
+import express from "express";
+import { Application } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 const cookieParser = require("cookie-parser");
@@ -16,10 +17,12 @@ app.use(express.json());
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(express.static("angular-app")); //set the static path
+app.set("view engine", "pug");
 const port = process.env.PORT || 3000;
 app.use(
   cors({
-    origin: ["http://localhost:4200"],
+    origin: ["*"],
     credentials: true,
   })
 );

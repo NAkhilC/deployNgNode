@@ -1,7 +1,28 @@
+const accessor = require("./../services/accessors");
+const passwordM = require("./../services/password-manager");
+const crypto = require("crypto");
 const postHandler = async (req: any, res: any, next: any) => {
-  req.session.user = req.body.data?.username;
-  res.status(200).json({ name: req.session.user });
+  const appUser = await accessor.gettAppUser(req.body.data?.username);
+  if ((appUser.status = 200 && appUser.data)) {
+    const compare = await passwordM.comparePassword(req.body.data?.password, appUser.data.password);
+    if (compare) {
+      req.session.appUser = {
+        username: req.body.data?.username,
+        firstName: appUser.data?.firstName,
+        userId: appUser.data?.userId,
+        lastName: appUser.data?.lastName,
+        sessionId: crypto.randomBytes(16).toString("hex"),
+      };
+      return res.status(200).json({ name: appUser.data?.firstName, status: 200 });
+    }
+    return res.status(500).json({ data: "PASSINVALID" });
+  }
+
+  return res.status(500).json({ data: "NOUSER" });
 };
+
+// const isUserLoggedIn = async (req: any, res: any, next: any) => {
+// }
 
 const logoutHandler = async (req: any, res: any, next: any) => {
   req.session.destroy();

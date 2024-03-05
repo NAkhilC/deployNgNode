@@ -41,7 +41,7 @@ export class HeaderComponent {
             appUser: { userName: null, status: false },
           })
         );
-        this.router.navigate(['login']);
+        this.router.navigate(['']);
       });
   }
 }

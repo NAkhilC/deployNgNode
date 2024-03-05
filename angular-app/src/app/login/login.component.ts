@@ -9,9 +9,10 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Store, StoreModule } from '@ngrx/store';
-import { selectAppState } from '../store/appUser.selector';
 import { UpdateAppUser } from '../store/appUser.actions';
 import { UserServiceService } from '../services/userService/user.service.service';
+import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +25,13 @@ import { UserServiceService } from '../services/userService/user.service.service
     RouterModule,
     HttpClientModule,
     StoreModule,
+    CommonModule,
   ],
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  signUpForm: FormGroup;
+  isLogin: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -40,6 +44,13 @@ export class LoginComponent {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+    this.signUpForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+    });
   }
 
   ngOnInit() {
@@ -48,12 +59,50 @@ export class LoginComponent {
         this.router.navigate(['home']);
       }
     });
+    console.log(environment);
+
+    this.http
+      .get<any>(`${environment.baseUrl}/login`, {
+        withCredentials: true,
+      })
+      .subscribe((val) => {
+        this.store.dispatch(
+          UpdateAppUser({
+            appUser: { userName: val.name, status: val.name ? true : false },
+          })
+        );
+      });
+  }
+
+  isValid(form: string, control: string) {
+    if (form === 'signUpForm') {
+      return (
+        this.signUpForm.get(control)?.valid &&
+        this.signUpForm.get(control)?.touched
+      );
+    } else {
+      return (
+        this.loginForm.get(control)?.valid &&
+        this.loginForm.get(control)?.touched
+      );
+    }
+  }
+
+  onSubmitSignUp() {
+    this.http
+      .post<any>(
+        'http://localhost:3000/register',
+        { data: this.signUpForm.value },
+        {
+          withCredentials: true,
+        }
+      )
+      .subscribe((val) => {
+        console.log(val);
+      });
   }
 
   onSubmit() {
-    // Add your login logic here
-    console.log('Login Form Submitted:', this.loginForm.value);
-
     this.http
       .post<any>(
         'http://localhost:3000/login',
@@ -68,7 +117,6 @@ export class LoginComponent {
             appUser: { userName: val.name, status: val.name ? true : false },
           })
         );
-        this.router.navigate(['home']);
       });
   }
 }
