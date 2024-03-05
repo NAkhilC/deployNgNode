@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const login = require("./routes/login");
-const listing = require("./routes/listing");
-const home = require("./routes/home");
-const register = require("./routes/register");
+const login = require("./login");
+const listing = require("./listing");
+const home = require("./home");
+const register = require("./register");
 
 router.get("/", (req: any, res: any, next: any) => {
   res.status(200).json({ name: "akhil" });

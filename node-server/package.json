@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "tsc": "tsc",
-    "start": "node app.js",
+    "start": "node ./dist/app.js",
     "nodemon-app": "set NODE_ENV=development && nodemon app.ts && --watch *.js",
     "nodemon-prod": "set NODE_ENV=production && nodemon app.ts && --watch *.js",
     "test": "echo \"Error: no test specified\" && exit 1"

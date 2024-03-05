@@ -6,6 +6,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const redis = require("redis");
 const RedisStore = require("connect-redis").default;
+const index = require("./routes/index");
 
 //For env File
 dotenv.config();
@@ -55,7 +56,7 @@ app.use(
   })
 );
 
-app.use("/", require("./index.ts"));
+app.use("/", require(index));
 app.listen(port, () => {
   console.log(`Server is Fire at ${port}, runnong on ${process.env.NODE_ENV} environment`);
 });
