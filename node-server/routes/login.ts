@@ -1,6 +1,6 @@
 const accessor = require("./../services/accessors");
 const passwordM = require("./../services/password-manager");
-const crypto = require("crypto");
+const cryptoa = require("crypto");
 const postHandler = async (req: any, res: any, next: any) => {
   const appUser = await accessor.gettAppUser(req.body.data?.username);
   if ((appUser.status = 200 && appUser.data)) {
@@ -11,7 +11,7 @@ const postHandler = async (req: any, res: any, next: any) => {
         firstName: appUser.data?.firstName,
         userId: appUser.data?.userId,
         lastName: appUser.data?.lastName,
-        sessionId: crypto.randomBytes(16).toString("hex"),
+        sessionId: cryptoa.randomBytes(16).toString("hex"),
       };
       return res.status(200).json({ name: appUser.data?.firstName, status: 200 });
     }
