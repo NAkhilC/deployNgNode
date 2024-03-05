@@ -5,7 +5,6 @@ import cors from "cors";
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 import bodyParser from "body-parser";
-import { RedisConnection } from "./redis-connection";
 const redis = require("redis");
 const RedisStore = require("connect-redis").default;
 
