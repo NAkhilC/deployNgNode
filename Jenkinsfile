@@ -16,11 +16,11 @@ pipeline {
         }
         
         stage('Build Docker Image') {
+           when {
+                branch 'master'
+            }
             steps {
-                // Build Docker image
-                script {
-                    docker.build("my-node-app")
-                }
+                sh 'docker build --label v1.0.0 -t angulardep/my-node-app:v1.0.0'
             }
         }
         
