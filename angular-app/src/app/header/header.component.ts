@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { UpdateAppUser } from '../store/appUser.actions';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -29,7 +30,7 @@ export class HeaderComponent {
   logout() {
     this.http
       .post<any>(
-        'http://localhost:3000/logout',
+        `${environment.baseUrl}/logout`,
         { data: '' },
         {
           withCredentials: true,

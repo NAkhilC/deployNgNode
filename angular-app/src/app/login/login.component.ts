@@ -59,7 +59,7 @@ export class LoginComponent {
         this.router.navigate(['home']);
       }
     });
-    console.log(environment);
+    console.log(environment, `${environment.baseUrl}/login`);
 
     this.http
       .get<any>(`${environment.baseUrl}/login`, {

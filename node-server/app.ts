@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const redis = require("redis");
 const RedisStore = require("connect-redis").default;
 const index = require("./routes/index");
+const path = require("path");
 
 //For env File
 dotenv.config();
@@ -16,15 +17,17 @@ app.use(express.json());
 
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static("angular-app")); //set the static path
+//set the static path
+
 app.set("view engine", "pug");
 const port = process.env.PORT || 3000;
 app.use(
   cors({
-    origin: ["*"],
+    origin: ["localhost:4200, localhost:3000"],
     credentials: true,
   })
 );
+
 const oneHour = 1000 * 60 * 60 * 1;
 
 const client = redis.createClient({
@@ -55,8 +58,9 @@ app.use(
     resave: false,
   })
 );
+app.use("/", index);
+app.use(express.static(path.join(__dirname, "angular-app")));
 
-app.use("/", require(index));
 app.listen(port, () => {
   console.log(`Server is Fire at ${port}, runnong on ${process.env.NODE_ENV} environment`);
 });

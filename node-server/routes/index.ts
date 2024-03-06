@@ -4,16 +4,12 @@ const listing = require("./listing");
 const home = require("./home");
 const register = require("./register");
 
-router.get("/", (req: any, res: any, next: any) => {
-  res.status(200).json({ name: "akhil" });
-});
-
 router.get(
   "/login",
   (req: any, res: any, next: any) => {
-    if (req.session.appUser?.userId) {
-      return res.status(200).json({ name: req.session.appUser?.firstName, status: 200 });
-    }
+    // if (req.session?.appUser?.userId) {
+    //   return res.status(200).json({ name: req.session.appUser?.firstName, status: 200 });
+    // }
     next();
   },
   function (req: any, res: any, next: any) {

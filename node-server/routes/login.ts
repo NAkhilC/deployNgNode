@@ -4,8 +4,8 @@ const cryptoa = require("crypto");
 const postHandler = async (req: any, res: any, next: any) => {
   const appUser = await accessor.gettAppUser(req.body.data?.username);
   if ((appUser.status = 200 && appUser.data)) {
-    const compare = await passwordM.comparePassword(req.body.data?.password, appUser.data.password);
-    if (compare) {
+    //const compare = await passwordM.comparePassword(req.body.data?.password, appUser.data.password);
+    if (req.body.data?.password === appUser.data.password) {
       req.session.appUser = {
         username: req.body.data?.username,
         firstName: appUser.data?.firstName,

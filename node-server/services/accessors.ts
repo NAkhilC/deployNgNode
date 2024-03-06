@@ -140,6 +140,8 @@ const putItem = async (userInfo: any) => {
     .catch((err: any) => {
       return { status: 500 };
     });
+
+  return { status: 500 };
 };
 
 module.exports = { getItems, getItemById, getPreSignedUrlsForImages, gettAppUser, putItem };
