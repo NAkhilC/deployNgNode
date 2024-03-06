@@ -1,18 +1,19 @@
 pipeline {
-    agent {
-        docker {
-            // Specify the Docker image that contains Docker CLI
-            image 'docker:latest'
-            // Mount Docker socket so that Docker commands inside the container can interact with the Docker daemon
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
     
     environment {
         DOCKER_REGISTRY_URL = 'https://hub.docker.com'
         DOCKER_IMAGE_NAME = 'my-node-app'
         DOCKER_IMAGE_TAG = 'latest'
     }
+
+    stages {
+        stage('Check Docker') {
+            steps {
+                sh 'docker --version'
+            }
+        }
+    
     
     stages {
         stage('Checkout') {
