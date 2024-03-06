@@ -6,17 +6,14 @@ pipeline {
         DOCKER_IMAGE_NAME = 'my-node-app'
         DOCKER_IMAGE_TAG = 'latest'
     }
-
-    stages {
+    
+    
+    stages { 
         stage('Check Docker') {
             steps {
                 sh 'docker --version'
             }
         }
-    }
-    
-    
-    stages {
         stage('Checkout') {
             steps {
                 // Checkout source code from Git
