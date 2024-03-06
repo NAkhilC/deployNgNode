@@ -1,6 +1,7 @@
 pipeline {
-    agent any
-    
+     agent {
+        docker { image 'node:18-alpine' }
+    }
     environment {
         DOCKER_REGISTRY_URL = 'https://hub.docker.com'
         DOCKER_IMAGE_NAME = 'my-node-app'
@@ -9,9 +10,9 @@ pipeline {
     
     
     stages { 
-        stage('Check Docker') {
+        stage('Test') {
             steps {
-                sh 'docker --version'
+                sh 'node --version'
             }
         }
         stage('Checkout') {
