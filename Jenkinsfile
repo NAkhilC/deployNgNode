@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout source code from Git
-                git 'your-git-repository-url'
+                git 'https://github.com/NAkhilC/deployNgNode.git'
             }
         }
         
