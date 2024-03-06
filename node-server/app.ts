@@ -62,5 +62,5 @@ app.use("/", index);
 app.use(express.static(path.join(__dirname, "angular-app")));
 
 app.listen(port, () => {
-  console.log(`Server is Fire at ${port}, runnong on ${process.env.NODE_ENV} environment`);
+  console.log(`Server is Fire at ${port}, running on ${process.env.NODE_ENV} environment`);
 });
