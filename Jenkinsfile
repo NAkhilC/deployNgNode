@@ -1,5 +1,12 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            // Specify the Docker image that contains Docker CLI
+            image 'docker:latest'
+            // Mount Docker socket so that Docker commands inside the container can interact with the Docker daemon
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
     
     environment {
         DOCKER_REGISTRY_URL = 'https://hub.docker.com'
