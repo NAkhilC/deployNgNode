@@ -17,7 +17,7 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                sh 'docker build --label v1.0.0 -t angulardep/my-node-app:v1.0.0'
+                sh 'docker build -t angulardep/my-node-app .'
             }
         }
         
