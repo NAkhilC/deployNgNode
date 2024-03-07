@@ -45,7 +45,7 @@ const client = redis.createClient({
 })();
 app.use(
   session({
-    secret: "thisisdeployentopenshift",
+    secret: "thisisdeployentopenshiftapp",
     store: new RedisStore({
       client: client,
     }),
