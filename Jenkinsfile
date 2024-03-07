@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_REGISTRY = 'https://hub.docker.com/'
+        DOCKER_REGISTRY = 'https://registry.hub.docker.com'
         DOCKER_IMAGE_NAME = 'my-node-app'
         GIT_REPO_URL = 'https://github.com/NAkhilC/deployNgNode.git'
     }
@@ -17,7 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}")
+                    docker.build("my-node-app/latest:${env.BUILD_NUMBER}")
                 }
             }
         }
@@ -25,11 +25,16 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://your-docker-registry-url', 'DOCKER_SECRET') {
-                        docker.image("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}").push()
+                    echo "Pushing the image to docker hub"
+                    def localImage = "my-node-app/latest:${env.BUILD_NUMBER}"
+                    def repositoryName = "akhil2715/angulardep"
+                    docker.withRegistry("", "DOCKER_SECRET") {
+                       def image = docker.image("${repositoryName}");
+                       image.push()
                     }
                 }
             }
         }
     }
 }
+
