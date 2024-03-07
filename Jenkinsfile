@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     echo "Pushing the image to docker hub"
-                    def localImage = "my-node-app/latest:${env.BUILD_NUMBER}"
+                    def localImage = "my-node-app:latest"
                     def repositoryName = "akhil2715/angulardep/${localImage}"
                     docker.withRegistry("", "DOCKER_SECRET") {
                        def image = docker.image("${repositoryName}");
