@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         DOCKER_REGISTRY = 'https://registry.hub.docker.com'
-        DOCKER_IMAGE_NAME = 'my-node-app',
+        DOCKER_IMAGE_NAME = 'my-node-app'
         imagename = "akhil2715/my-node-app"
         GIT_REPO_URL = 'https://github.com/NAkhilC/deployNgNode.git',
         dockerImage = ''
