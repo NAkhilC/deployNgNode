@@ -3,8 +3,10 @@ pipeline {
     
     environment {
         DOCKER_REGISTRY = 'https://registry.hub.docker.com'
-        DOCKER_IMAGE_NAME = 'my-node-app'
-        GIT_REPO_URL = 'https://github.com/NAkhilC/deployNgNode.git'
+        DOCKER_IMAGE_NAME = 'my-node-app',
+         imagename = "akhil2715/my-node-app"
+        GIT_REPO_URL = 'https://github.com/NAkhilC/deployNgNode.git',
+        dockerImage = ''
     }
 
     stages {
@@ -17,7 +19,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("my-node-app:latest")
+                 dockerImage =  docker.build imagename
                 }
             }
         }
@@ -29,8 +31,8 @@ pipeline {
                     def localImage = "my-node-app:latest"
                     def repositoryName = "akhil2715/${localImage}"
                     docker.withRegistry("", "DOCKER_SECRET") {
-                       def image = docker.image("${repositoryName}");
-                       image.push()
+                       dockerImage.push("$BUILD_NUMBER")
+                       dockerImage.push("latest")
                     }
                 }
             }
