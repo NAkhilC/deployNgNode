@@ -27,7 +27,7 @@ pipeline {
                 script {
                     echo "Pushing the image to docker hub"
                     def localImage = "my-node-app:latest"
-                    def repositoryName = "akhil2715/${localImage}"
+                    def repositoryName = "akhil2715/nodeang/${localImage}"
                     docker.withRegistry("", "DOCKER_SECRET") {
                        def image = docker.image("${repositoryName}");
                        image.push()
