@@ -17,7 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("my-node-app/latest:${env.BUILD_NUMBER}")
+                    docker.build("my-node-app:latest")
                 }
             }
         }
