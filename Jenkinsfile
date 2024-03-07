@@ -36,10 +36,10 @@ pipeline {
             steps {
                 script {
                     echo "Pushing the image to docker hub"
-                    def localImage = "my-node-app:latest"
+                    def localImage = "my-node-app"
                     def repositoryName = "akhil2715/${localImage}"
                     docker.withRegistry("", "DOCKER_SECRET") {
-                       dockerImage.push("$BUILD_NUMBER")
+                       dockerImage.push("repositoryName:$BUILD_NUMBER")
                        dockerImage.push("latest")
                     }
                 }
