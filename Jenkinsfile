@@ -15,6 +15,14 @@ pipeline {
                 git branch: 'master', url: env.GIT_REPO_URL
             }
         }
+
+         stage('first step ') {
+            steps {
+                script {
+                    echo "first step done"
+                }
+            }
+        }
         
         stage('Build Docker Image') {
             steps {
