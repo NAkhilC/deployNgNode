@@ -1,32 +1,23 @@
 pipeline {
-     agent {
-        docker { image 'node:18-alpine' }
-    }
-    environment {
-        DOCKER_REGISTRY_URL = 'https://hub.docker.com'
-        DOCKER_IMAGE_NAME = 'my-node-app'
-        DOCKER_IMAGE_TAG = 'latest'
-    }
-    
-    
-    stages { 
-        stage('Test') {
-            steps {
-                sh 'node --version'
-            }
-        }
+    agent any
+
+    stages {
         stage('Checkout') {
             steps {
-                // Checkout source code from Git
+                // Checkout code from Git repository
                 git 'https://github.com/NAkhilC/deployNgNode.git'
             }
         }
-        
+
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t angulardep/my-node-app .'
+                // Build Docker image
+                script {
+                    docker.build('my-node-app:latest')
+                }
             }
         }
-        
+
+      
     }
 }
