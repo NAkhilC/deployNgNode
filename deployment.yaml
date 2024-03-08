@@ -13,6 +13,9 @@ spec:
       labels:
         app: sample-nodejs
     spec:
+      securityContext:
+        runAsUser: 1000 # Update the UID as required.
+        #runAsUser: 0  # Update the UID to root.
       containers:
         - image: akhil2715/my-node-app:latest
           name: nodejs-api
