@@ -9,6 +9,7 @@ RUN ng build --configuration production
 
 # Stage 2: Build Node.js app
 FROM node:18-alpine AS node-build
+ENV NODE_ENV=development
 WORKDIR /app/node-server
 COPY node-server/package.json node-server/package-lock.json ./
 RUN npm install
